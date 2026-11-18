@@ -1,0 +1,46 @@
+name: Restful Booker API Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r level1-restful-booker/requirements.txt
+      - name: Start Restful Booker API
+        run: |
+          cd level1-restful-booker/restful-booker
+          npm install
+          npm start &
+          cd ../..
+          for i in {1..30}; do
+            if curl -s http://localhost:3001/ping; then
+              echo "API is ready"
+              break
+            fi
+            sleep 2
+          done
+      - name: Run API tests
+        working-directory: level1-restful-booker
+        env:
+          BASE_URL: http://localhost:3001
+        run: |
+          pytest -v --html=reports/report.html --self-contained-html
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-html-report
+          path: level1-restful-booker/reports/report.html
