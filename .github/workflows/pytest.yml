@@ -8,39 +8,53 @@ jobs:
   api-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout assignment repository
         uses: actions/checkout@v4
+      - name: Checkout Restful Booker application
+        uses: actions/checkout@v4
+        with:
+          repository: mwinteringham/restful-booker
+          path: restful-booker
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r level1-restful-booker/requirements.txt
+      - name: Install API dependencies
+        working-directory: restful-booker
+        run: npm install
       - name: Start Restful Booker API
+        working-directory: restful-booker
         run: |
-          cd level1-restful-booker/restful-booker
-          npm install
-          npm start &
-          cd ../..
+          npm start > api.log 2>&1 &
           for i in {1..30}; do
-            if curl -s http://localhost:3001/ping; then
+            if curl -fsS http://localhost:3001/ping; then
               echo "API is ready"
-              break
+              exit 0
             fi
             sleep 2
           done
+          echo "API failed to start. Application logs:"
+          cat api.log
+          exit 1
       - name: Run API tests
         working-directory: level1-restful-booker
         env:
           BASE_URL: http://localhost:3001
-        run: |
+        run: 
+          mkdir -p reports
           pytest -v --html=reports/report.html --self-contained-html
-
-      - name: Upload test report
+      - name: Upload HTML test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pytest-html-report
           path: level1-restful-booker/reports/report.html
+          if-no-files-found: warn
