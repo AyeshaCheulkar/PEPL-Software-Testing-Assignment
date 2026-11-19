@@ -1,12 +1,12 @@
 # Restful Booker API Automation Testing
 
-![API Tests](https://github.com/AyeshaCheulkar/PEPL-Software-Testing-Assignment/actions/workflows/pytest.yml/badge.svg)
+[![API Tests](https://github.com/AyeshaCheulkar/PEPL-Software-Testing-Assignment/actions/workflows/pytest.yml/badge.svg)](https://github.com/AyeshaCheulkar/PEPL-Software-Testing-Assignment/actions/workflows/pytest.yml)
 
 **PEPL Software Testing Assignment · Level 1 – API Automation Testing**
 
 **Candidate:** Ayesha Cheulkar
 
-An automated API testing framework for the [Restful Booker](https://github.com/mwinteringham/restful-booker) application, built using Python, Pytest and Requests. The framework supports local execution and continuous integration through GitHub Actions, with self-contained HTML test reports.
+An automated API testing framework for the [Restful Booker](https://github.com/mwinteringham/restful-booker) application, built using Python, Pytest, and Requests. The framework supports local execution and continuous integration through GitHub Actions, with self-contained HTML test reports.
 
 ## Table of Contents
 
@@ -26,14 +26,14 @@ An automated API testing framework for the [Restful Booker](https://github.com/m
 
 ## Features
 
-- **Reusable API Client:** Centralises HTTP requests, URLs and session handling.
+- **Reusable API Client:** Centralises HTTP requests, URLs, and session handling.
 - **Test Data Builders:** Generate reusable booking payloads for test execution.
-- **Pytest Fixtures:** Manage test setup, authentication and cleanup.
+- **Pytest Fixtures:** Manage test setup, authentication, and cleanup.
 - **Parametrised Testing:** Validate multiple invalid-input scenarios.
 - **JSON Schema Validation:** Verify API response structures and data types.
 - **Configurable Base URL:** Supports a default URL and custom configuration through the `BASE_URL` environment variable.
 - **Response-Time Validation:** Checks API response time against a two-second threshold.
-- **CRUD Lifecycle Testing:** Validates the complete booking workflow, including Create, Read, PUT, PATCH, Delete and 404 verification.
+- **CRUD Lifecycle Testing:** Validates the complete booking workflow, including Create, Read, PUT, PATCH, Delete, and 404 verification.
 - **HTML Reporting:** Generates self-contained HTML test reports.
 - **Continuous Integration:** Automatically executes tests through GitHub Actions.
 
@@ -168,7 +168,13 @@ Keep the API terminal running while executing the tests.
 
 ## Running the Tests
 
-Open a separate terminal, activate your Python virtual environment and navigate to the testing directory:
+Open a separate terminal, activate your Python virtual environment, and navigate to the testing directory:
+
+```bash
+cd PEPL-Software-Testing-Assignment
+```
+
+Activate the environment if it is not already active, then run:
 
 ```bash
 cd level1-restful-booker
@@ -204,23 +210,23 @@ The report will be saved at:
 
 `level1-restful-booker/reports/report.html`
 
-Open the generated HTML file in a web browser to review test results, execution details and failures.
+Open the generated HTML file in a web browser to review test results, execution details, and failures.
 
 ## Test Coverage
 
 | Testing Area | Scenarios Covered |
 |---|---|
-| Authentication | Valid and invalid credentials, token-cookie authentication and Basic authentication |
+| Authentication | Valid and invalid credentials, token-cookie authentication, and Basic authentication |
 | Booking Creation | Creating bookings using valid test data |
 | Booking Retrieval | Retrieving existing bookings by ID |
 | Booking Update | Full updates using PUT and partial updates using PATCH |
 | Booking Deletion | Deleting bookings and verifying subsequent 404 responses |
-| Complete Booking Lifecycle | Create, Read, PUT, PATCH, Delete and verify that the deleted booking returns 404 |
+| Complete Booking Lifecycle | Create, Read, PUT, PATCH, Delete, and verify that the deleted booking returns 404 |
 | Negative Testing | Invalid booking IDs and negative input scenarios |
 | Schema Validation | Validating API responses against JSON Schema |
 | Configuration | Default and custom API base URL |
 | Health Check | API ping endpoint |
-| Response Time | Response time validation against a two-second threshold |
+| Response Time | Response-time validation against a two-second threshold |
 | Test Data | Test-data generation and reusable payloads |
 
 ## Test Execution Results
@@ -236,7 +242,7 @@ The complete Level 1 test suite was executed locally using Pytest.
 
 **Overall Result: 21/21 tests passed.**
 
-The HTML test report was generated successfully using `pytest-html`.
+The HTML test report was also generated successfully using `pytest-html`.
 
 ## Continuous Integration
 
@@ -275,9 +281,9 @@ The HTML report can be downloaded from the artifacts section of a completed work
 
 ## Documentation
 
-For more information about the testing scope, methodology, test scenarios, test environment, risks and entry/exit criteria, refer to:
+For more information about the testing scope, methodology, test scenarios, test environment, risks, and entry/exit criteria, refer to:
 
-[`level1-restful-booker/test_plan.md`](level1-restful-booker/test_plan.md)
+[`test_plan.md`](test_plan.md)
 
 ## Repository
 
@@ -287,5 +293,5 @@ For more information about the testing scope, methodology, test scenarios, test 
 
 **Ayesha Cheulkar**
 
-- [GitHub Profile](https://github.com/AyeshaCheulkar)
-- [LinkedIn Profile](https://www.linkedin.com/in/ayesha-cheulkar-6ba8ab249)
+[GitHub Profile](https://github.com/AyeshaCheulkar)
+[LinkedIn Profile](https://www.linkedin.com/in/ayesha-cheulkar-6ba8ab249)
