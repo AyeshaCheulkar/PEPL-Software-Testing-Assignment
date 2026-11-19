@@ -13,3 +13,4 @@ node_modules/
 
 # Test reports
 level1-restful-booker/reports/*.html
+level2-toolshop/report.html

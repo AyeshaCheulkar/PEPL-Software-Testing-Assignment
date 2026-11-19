@@ -17,9 +17,11 @@ An automated API testing framework for the [Restful Booker](https://github.com/m
 - [Running the Tests](#running-the-tests)
 - [HTML Test Report](#html-test-report)
 - [Test Coverage](#test-coverage)
+- [Test Execution Results](#test-execution-results)
 - [Continuous Integration](#continuous-integration)
 - [Troubleshooting](#troubleshooting)
 - [Documentation](#documentation)
+- [Repository](#repository)
 - [Author](#author)
 
 ## Features
@@ -31,6 +33,7 @@ An automated API testing framework for the [Restful Booker](https://github.com/m
 - **JSON Schema Validation:** Verify API response structures and data types.
 - **Configurable Base URL:** Supports a default URL and custom configuration through the `BASE_URL` environment variable.
 - **Response-Time Validation:** Checks API response time against a two-second threshold.
+- **CRUD Lifecycle Testing:** Validates the complete booking workflow, including Create, Read, PUT, PATCH, Delete and 404 verification.
 - **HTML Reporting:** Generates self-contained HTML test reports.
 - **Continuous Integration:** Automatically executes tests through GitHub Actions.
 
@@ -66,6 +69,7 @@ PEPL-Software-Testing-Assignment/
 │   │   ├── test_booking_read.py
 │   │   ├── test_booking_update.py
 │   │   ├── test_booking_delete.py
+│   │   ├── test_booking_lifecycle.py
 │   │   ├── test_booking_schema.py
 │   │   ├── test_invalid_inputs.py
 │   │   ├── test_configuration.py
@@ -211,12 +215,28 @@ Open the generated HTML file in a web browser to review test results, execution 
 | Booking Retrieval | Retrieving existing bookings by ID |
 | Booking Update | Full updates using PUT and partial updates using PATCH |
 | Booking Deletion | Deleting bookings and verifying subsequent 404 responses |
+| Complete Booking Lifecycle | Create, Read, PUT, PATCH, Delete and verify that the deleted booking returns 404 |
 | Negative Testing | Invalid booking IDs and negative input scenarios |
 | Schema Validation | Validating API responses against JSON Schema |
 | Configuration | Default and custom API base URL |
 | Health Check | API ping endpoint |
 | Response Time | Response time validation against a two-second threshold |
 | Test Data | Test-data generation and reusable payloads |
+
+## Test Execution Results
+
+The complete Level 1 test suite was executed locally using Pytest.
+
+| Result | Count |
+|---|---:|
+| Total Tests | 21 |
+| Passed | 21 |
+| Failed | 0 |
+| Skipped | 0 |
+
+**Overall Result: 21/21 tests passed.**
+
+The HTML test report was generated successfully using `pytest-html`.
 
 ## Continuous Integration
 
