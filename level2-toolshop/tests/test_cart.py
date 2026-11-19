@@ -36,27 +36,36 @@ def test_product_is_added_to_cart(page, shop_base_url):
         timeout=30000
     )
 
-    # Step 4: Select the second product
-    second_product = product_cards.nth(1)
+    # Step 4: Find Combination Pliers
+    product_name = ""
 
-    # Step 5: Get product name
-    product_name = second_product.locator(
-        '[data-test="product-name"]'
-    ).inner_text().strip()
+    for index in range(product_cards.count()):
+        product = product_cards.nth(index)
+
+        name = product.locator(
+            '[data-test="product-name"]'
+        ).inner_text().strip()
+
+        if name == "Combination Pliers":
+            product_name = name
+            product.click()
+            break
+
+    # Step 5: Verify that the product was found
+    assert product_name == "Combination Pliers", (
+        "Combination Pliers product was not found"
+    )
 
     print("\nSelected product:", product_name)
 
-    # Step 6: Open product details
-    second_product.click()
-
-    # Step 7: Get product price
+    # Step 6: Get product price
     product_price = page.locator(
         '[data-test="unit-price"]'
     ).inner_text().strip()
 
     print("Product price:", product_price)
 
-    # Step 8: Click Add to Cart
+    # Step 7: Click Add to Cart
     add_to_cart_button = page.locator(
         '[data-test="add-to-cart"]'
     )
@@ -66,7 +75,7 @@ def test_product_is_added_to_cart(page, shop_base_url):
 
     add_to_cart_button.click()
 
-    # Step 9: Open shopping cart
+    # Step 8: Open shopping cart
     cart_link = page.locator(
         '[data-test="nav-cart"]'
     )
@@ -74,34 +83,34 @@ def test_product_is_added_to_cart(page, shop_base_url):
     expect(cart_link).to_be_visible()
     cart_link.click()
 
-    # Step 10: Verify product name in cart
+    # Step 9: Verify product name in cart
     expect(
         page.locator('[data-test="product-title"]')
     ).to_have_text(product_name, timeout=15000)
 
-    # Step 11: Verify product quantity
+    # Step 10: Verify product quantity
     expect(
         page.locator('[data-test="product-quantity"]')
     ).to_have_value("1")
 
-    # Step 12: Verify product price
+    # Step 11: Verify product price
     expect(
         page.locator('[data-test="product-price"]')
     ).to_contain_text(product_price)
 
-    # Step 13: Capture evidence before checking line total
+    # Step 12: Capture evidence before checking line total
     take_bug_screenshot(
         page,
         shop_base_url,
         "cart-incorrect-line-total.png"
     )
 
-    # Step 14: Verify line total
+    # Step 13: Verify line total
     expect(
         page.locator('[data-test="line-price"]')
     ).to_contain_text(product_price)
 
-    # Step 15: Verify cart total
+    # Step 14: Verify cart total
     expect(
         page.locator('[data-test="cart-total"]')
     ).to_contain_text(product_price)
@@ -133,11 +142,25 @@ def test_add_to_cart_success_notification(page, shop_base_url):
         timeout=30000
     )
 
-    # Step 4: Select the second product
-    second_product = product_cards.nth(1)
+    # Step 4: Find and open Combination Pliers
+    product_found = False
 
-    # Step 5: Open product details
-    second_product.click()
+    for index in range(product_cards.count()):
+        product = product_cards.nth(index)
+
+        name = product.locator(
+            '[data-test="product-name"]'
+        ).inner_text().strip()
+
+        if name == "Combination Pliers":
+            product.click()
+            product_found = True
+            break
+
+    # Step 5: Verify that the product was found
+    assert product_found, (
+        "Combination Pliers product was not found"
+    )
 
     # Step 6: Locate Add to Cart button
     add_to_cart_button = page.locator(

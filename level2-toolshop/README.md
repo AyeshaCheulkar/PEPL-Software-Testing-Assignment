@@ -99,7 +99,7 @@ level2-toolshop/
 Clone the repository:
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/AyeshaCheulkar/PEPL-Software-Testing-Assignment
 ```
 
 Navigate to the project folder:
@@ -148,30 +148,54 @@ pytest tests/test_contact.py -v -s --shop-base-url=https://with-bugs.practicesof
 
 ## 7. Test Execution Results
 
-### Contact Form Test Results
+The complete automated test suite contains 19 test cases and was executed against both application builds.
+
+### 7.1 Overall Test Results
+
+| Test Environment | Total Tests | Passed | Failed |
+|---|---:|---:|---:|
+| Reference Build | 19 | 19 | 0 |
+| Bug Build | 19 | 13 | 6 |
+
+**Reference Build:** All 19 test cases passed successfully.
+
+**Bug Build:** 13 test cases passed and 6 test cases failed, exposing the identified application defects.
+
+### 7.2 Feature-wise Test Results
+
+| Functionality | Reference Build | Bug Build |
+|---|---:|---:|
+| Cart | 2 passed | 2 failed |
+| Contact Form | 9 passed | 4 failed, 5 passed |
+| Homepage | 1 passed | 1 passed |
+| Product Details | 1 passed | 1 passed |
+| Product Listing | 1 passed | 1 passed |
+| Search | 1 passed | 1 passed |
+| Sorting | 4 passed | 4 passed |
+| **Total** | **19 passed** | **13 passed, 6 failed** |
+
+### 7.3 Contact Form Test Results
 
 | Test Environment | Passed | Failed |
 |---|---:|---:|
 | Reference Build | 9 | 0 |
 | Bug Build | 5 | 4 |
 
-The Reference Build passed all nine Contact Form test cases.
-
 The Bug Build produced four failures, exposing differences in subject dropdown options, attachment instructions, file input restrictions and subject validation.
 
-**Note:** The valid submission and PDF attachment tests are exploratory tests that currently print the page result. Their passing pytest status does not independently establish successful form submission or PDF acceptance.
+**Note:** The valid submission and PDF attachment submission tests are exploratory tests that currently print the page result without asserting successful submission or PDF acceptance. Their passing pytest status does not independently establish successful form submission or PDF acceptance.
 
-### Identified Defects
+### 7.4 Identified Defects
 
 | Bug ID | Description | Severity |
 |---|---|---|
-| BUG-001 | Incorrect cart line total | High (provisional) |
-| BUG-002 | Missing Add to Cart success notification | Medium (provisional) |
-| BUG-005 | Unexpected errors in Contact subject dropdown | Medium (provisional) |
-| BUG-006 | Missing file-type restriction on attachment input | Medium (provisional) |
-| BUG-007 | Contact form does not recognise selected subject | Medium (provisional) |
+| BUG-001 | Incorrect cart line total | High |
+| BUG-002 | Missing Add to Cart success notification | Medium |
+| BUG-005 | Incorrect contact subject dropdown options | Medium |
+| BUG-006 | Incorrect attachment instructions and missing file input restriction | Medium |
+| BUG-007 | Contact form does not recognise the selected subject | Medium |
 
-Detailed reproduction steps, expected results, actual results and evidence are documented in the `bug-reports/` directory.
+Detailed reproduction steps, expected results, actual results, impact and supporting evidence are documented in the `bug-reports/` directory.
 
 ## 8. Screenshots and Reports
 
@@ -193,4 +217,8 @@ This project demonstrates functional automation testing using Python, Playwright
 
 The test suite covers major Toolshop functionalities, including product listing, sorting, search, product details, shopping cart and contact form operations.
 
-By executing the same tests against the Reference Build and Bug Build, differences in expected and actual application behaviour can be identified and documented with supporting evidence.
+By executing the same automated tests against the Reference Build and Bug Build, differences in expected and actual application behaviour were identified and documented with supporting screenshots and defect reports.
+
+The Reference Build passed all 19 test cases, while the Bug Build produced 6 failures that exposed 5 documented defects.
+
+This project demonstrates the use of automated functional testing, test assertions, cross-build comparison, defect identification and evidence-based bug reporting.
