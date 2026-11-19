@@ -1,25 +1,51 @@
 # PEPL – Testing / QA Technical Assignment
 
+[![API Tests](https://github.com/AyeshaCheulkar/PEPL-Software-Testing-Assignment/actions/workflows/pytest.yml/badge.svg)](https://github.com/AyeshaCheulkar/PEPL-Software-Testing-Assignment/actions/workflows/pytest.yml)
+
 **Candidate:** Ayesha Cheulkar  
-**Language:** Python  
-**Testing Framework:** Pytest  
+**Language:** Python · **Frameworks:** Pytest, Playwright
 
-## 1. Project Overview
+This repository contains my work for the PEPL Testing / QA Technical Assignment. It includes two completed levels: API automation testing (Level 1) and UI automation testing with bug hunting (Level 2).
 
-This repository contains my work for the PEPL Testing / QA Technical Assignment.
+## Table of Contents
 
-The completed work documented here covers API testing and UI automation testing using Python, Pytest and Playwright.
+- [At a Glance](#at-a-glance)
+- [Repository Structure](#repository-structure)
+- [Prerequisites](#prerequisites)
+- [Level 1 – Restful Booker API Testing](#level-1--restful-booker-api-testing)
+- [Level 2 – Toolshop UI Automation Testing](#level-2--toolshop-ui-automation-testing)
+- [Bug Reporting](#bug-reporting)
+- [Notes](#notes)
+- [Submission](#submission)
 
-## 2. Repository Structure
+## At a Glance
+
+| | Level 1 | Level 2 |
+|---|---|---|
+| **Focus** | API automation | UI automation and defect finding |
+| **Difficulty** | Easy | Hard |
+| **Application** | Restful Booker (run locally) | Practice Software Testing (reference and bug builds) |
+| **Tools** | Pytest, Requests, jsonschema | Pytest, Playwright, pytest-html |
+| **Result** | Full test suite with HTML report and CI | 19/19 passed on reference build; 6 failures on bug build |
+| **Details** | Level 1 README | Level 2 README |
+
+## Repository Structure
 
 ```text
 PEPL-Software-Testing-Assignment/
-│
+├── .github/
+│   └── workflows/
+│       └── pytest.yml              # CI for Level 1
 ├── level1-restful-booker/
+│   ├── schemas/
 │   ├── tests/
+│   ├── utils/
 │   ├── reports/
+│   ├── conftest.py
+│   ├── pytest.ini
+│   ├── requirements.txt
+│   ├── test_plan.md
 │   └── README.md
-│
 ├── level2-toolshop/
 │   ├── bug-reports/
 │   ├── screenshots/
@@ -28,132 +54,135 @@ PEPL-Software-Testing-Assignment/
 │   ├── pytest.ini
 │   ├── requirements.txt
 │   └── README.md
-│
 └── README.md
 ```
 
-## 3. Level 1 – RESTful Booker API Testing
+## Prerequisites
 
-**Difficulty:** Easy
+- Python 3.11 or higher
+- Git
+- Node.js and npm (Level 1 only, to run the Restful Booker API)
 
-**Objective:** Test the RESTful Booker API and develop a reusable API testing framework.
+Using a virtual environment is recommended:
 
-**Application:** RESTful Booker  
-Repository: https://github.com/mwinteringham/restful-booker
+```bash
+python -m venv .venv
 
-**Scope of Testing:**
-- Authentication using token cookie and Basic authentication.
-- Booking creation and retrieval.
-- Booking update and partial update.
-- Booking deletion.
-- Invalid input and negative test scenarios.
-- Response schema validation.
-- Response-time verification.
-- Complete booking lifecycle testing.
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
 
-**How to Run:**
+# macOS / Linux
+source .venv/bin/activate
+```
 
-Navigate to the Level 1 folder:
+## Level 1 – Restful Booker API Testing
+
+**Objective:** Test the [Restful Booker](https://github.com/mwinteringham/restful-booker) API and build a reusable API testing framework.
+
+### Scope
+
+- Authentication with token cookie and Basic auth
+- Booking creation and retrieval
+- Full (PUT) and partial (PATCH) updates
+- Deletion and 404 verification
+- Invalid input and negative scenarios
+- Response schema validation
+- Response-time verification
+- Complete booking lifecycle
+
+### How to Run
+
+Start the Restful Booker API at `http://localhost:3001` (refer to the Level 1 README for setup instructions).
+
+Then run:
 
 ```bash
 cd level1-restful-booker
-```
-
-Run the test suite:
-
-```bash
+pip install -r requirements.txt
 pytest -v
 ```
 
-Refer to `level1-restful-booker/README.md` for setup instructions and additional details.
+Setup details, HTML report generation, and the CI workflow are covered in `level1-restful-booker/README.md`. The full testing scope and strategy are documented in `level1-restful-booker/test_plan.md`.
 
-## 4. Level 2 – Toolshop Website Automation Testing
+## Level 2 – Toolshop UI Automation Testing
 
-**Difficulty:** Hard
+**Objective:** Identify defects in a bug-injected e-commerce application using automated browser tests.
 
-**Objective:** Identify defects in a bug-injected e-commerce application using automated browser testing.
+**Technologies:** Python, Pytest, Playwright, pytest-playwright, pytest-html, Chromium
 
-**Technologies:**
-- Python
-- Playwright
-- Pytest
-- pytest-playwright
-- pytest-html
-- Chromium
+### Application Builds
 
-**Application Builds:**
-
-| Environment | URL |
+| Build | URL |
 |---|---|
-| Reference Build | https://practicesoftwaretesting.com |
-| Bug Build | https://with-bugs.practicesoftwaretesting.com |
+| Reference (correct behaviour) | [https://practicesoftwaretesting.com](https://practicesoftwaretesting.com) |
+| Bug build (injected defects) | [https://with-bugs.practicesoftwaretesting.com](https://with-bugs.practicesoftwaretesting.com) |
 
-**Scope of Testing:**
-- Homepage and product listing.
-- Product sorting.
-- Product search.
-- Product details.
-- Shopping cart.
-- Contact form validation and submission.
+### Scope
 
-**How to Run:**
+- Homepage and product listing
+- Product sorting
+- Product search
+- Product details
+- Shopping cart
+- Contact form validation and submission
 
-Navigate to the Level 2 folder:
+### How to Run
+
+Install the dependencies:
 
 ```bash
 cd level2-toolshop
-```
-
-Install dependencies:
-
-```bash
 pip install -r requirements.txt
 playwright install chromium
 ```
 
-Run tests against the Reference Build:
+**Against the reference build:**
 
 ```bash
 pytest -v -s
 ```
 
-Run tests against the Bug Build:
+**Against the bug build:**
 
 ```bash
 pytest -v -s --shop-base-url=https://with-bugs.practicesoftwaretesting.com
 ```
 
-**Test Execution Summary:**
+### Test Results
 
-| Environment | Passed | Failed |
+| Build | Passed | Failed |
 |---|---:|---:|
-| Reference Build | 19 | 0 |
-| Bug Build | 13 | 6 |
+| Reference | 19 | 0 |
+| Bug | 13 | 6 |
 
-Five defects were documented with reproduction steps and supporting screenshots.
+The same automated test suite was executed against both builds. All 19 tests passed on the reference build, while 6 tests failed on the bug build, exposing differences in application behaviour.
 
-Refer to `level2-toolshop/README.md` for detailed test results and bug reports.
+These failures were investigated and documented in individual bug reports. Reproduction steps and screenshots are available in `level2-toolshop/bug-reports/` and `level2-toolshop/screenshots/`.
 
-## 5. Bug Reporting
+Refer to `level2-toolshop/README.md` for detailed test results and defect descriptions.
 
-For identified defects, individual bug reports include:
+## Bug Reporting
 
-- Bug title and severity.
-- Steps to reproduce.
-- Expected result.
-- Actual result.
-- Supporting evidence.
-- Why the defect matters.
+Each identified defect has an individual report containing:
 
-A test exposing a defect is expected to fail or be marked as an expected failure with its corresponding bug ID.
+- Bug ID, title, and severity
+- Steps to reproduce
+- Expected result
+- Actual result
+- Supporting evidence (screenshots)
+- Why the defect matters
 
-## 6. General Notes
+A test that exposes a defect is expected to fail or be marked as an expected failure (`xfail`) with a reference to its bug ID. Incorrect application behaviour should not be treated as a successful test outcome.
 
-- Each completed level is maintained in a separate folder.
-- Test execution instructions are provided in the respective level README files.
-- The projects use automated testing to identify and document application defects.
+## Notes
+
+- Each level has its own folder, README, and dependencies.
+- Run commands from inside the relevant level folder, as shown above.
 - The repository is maintained using Git and GitHub.
 
-## 7. Submission
+## Submission
 
-**GitHub Repository:** Add your public repository URL here.
+**GitHub Repository:** [PEPL-Software-Testing-Assignment](https://github.com/AyeshaCheulkar/PEPL-Software-Testing-Assignment)
+
+**Author:** Ayesha Cheulkar  
+[GitHub](https://github.com/AyeshaCheulkar) · [LinkedIn](https://www.linkedin.com/in/ayesha-cheulkar-6ba8ab249)
