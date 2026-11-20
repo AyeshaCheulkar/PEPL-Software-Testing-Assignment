@@ -32,3 +32,10 @@ def test_bug_002_incomplete_array():
 
     with pytest.raises(toml.TomlDecodeError):
         toml.loads(document)
+@pytest.mark.xfail(
+    reason="BUG-003: Parser accepts inline table without closing brace",
+    strict=True
+)
+def test_bug_003_incomplete_inline_table():
+    with pytest.raises(toml.TomlDecodeError):
+        toml.loads("A = {")
